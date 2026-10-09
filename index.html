@@ -1,0 +1,183 @@
+<title>National Automotive Service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Layout: workshop-signage site. Condensed display type, licence-plate tags for centre IDs, one orange accent, a dark call panel beside the hero. */
+:root{
+  --bg:#f1f3f5; --surface:#ffffff; --ink:#0f1b24; --muted:#52606b; --line:#d3dbe1;
+  --accent:#d94f0c; --accent-ink:#ffffff; --deep:#10202c; --deep-ink:#eef3f6; --deep-muted:#9fb1bf;
+  --plate:#f2cf3a; --plate-ink:#191919;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1218; --surface:#121d26; --ink:#e7edf1; --muted:#9aa9b5; --line:#24333e;
+    --accent:#ff7a33; --accent-ink:#141414; --deep:#08100f; --deep-ink:#eef3f6; --deep-muted:#9fb1bf;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1218; --surface:#121d26; --ink:#e7edf1; --muted:#9aa9b5; --line:#24333e;
+  --accent:#ff7a33; --accent-ink:#141414; --deep:#08100f; --deep-ink:#eef3f6; --deep-muted:#9fb1bf;
+  color-scheme:dark;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;padding-inline:16px}
+*{box-sizing:border-box}
+.wrap{max-width:1080px;margin-inline:auto}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);text-transform:uppercase;letter-spacing:.02em;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.6rem,7vw,4.6rem)}
+h2{font-size:clamp(1.8rem,4vw,2.5rem)}
+h3{font-size:1.35rem}
+p{margin:0}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:700;font-size:1.35rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+.brand span{color:var(--accent)}
+.nav{display:flex;gap:20px;flex-wrap:wrap;font-weight:500;font-size:.95rem}
+.nav a{text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:stretch;padding-block:48px}
+.hero-copy{display:flex;flex-direction:column;gap:20px;justify-content:center}
+.hero-copy p{max-width:52ch;color:var(--muted);font-size:1.1rem}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.call{background:var(--deep);color:var(--deep-ink);border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.call h2{font-size:2rem}
+.call p{color:var(--deep-muted)}
+.call .slot{min-height:64px;display:flex;align-items:center;justify-content:center;border:1px dashed color-mix(in srgb,var(--deep-ink) 35%,transparent);border-radius:8px;padding:14px;text-align:center;color:var(--deep-muted);font-size:.95rem}
+.call small{color:var(--deep-muted);font-size:.85rem}
+section{padding-block:48px;border-top:1px solid var(--line)}
+.head{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.head p{color:var(--muted);max-width:60ch}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.svc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.svc ul{margin:0;padding-left:1.1em;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;border-top:3px solid var(--accent);padding-top:12px;display:flex;flex-direction:column;gap:4px}
+.steps li::before{content:"Step " counter(s);font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.steps strong{font-weight:600}
+.steps span{color:var(--muted);font-size:.95rem}
+.centres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.centre{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.plate{align-self:flex-start;font-family:var(--mono);font-size:.8rem;background:var(--plate);color:var(--plate-ink);border:2px solid var(--plate-ink);border-radius:5px;padding:2px 10px;letter-spacing:.08em}
+.centre dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;color:var(--muted);font-size:.95rem}
+.centre dt{font-weight:600;color:var(--ink)}
+.centre dd{margin:0;min-width:0}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+details+details{margin-top:10px}
+summary{cursor:pointer;font-weight:600}
+summary:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+details p{color:var(--muted);margin-top:8px;max-width:64ch}
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);font-size:.9rem;display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
+@media (max-width:860px){
+  .hero{grid-template-columns:minmax(0,1fr);padding-block:32px}
+  .grid3{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .centres{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top">National <span>Automotive</span> Service</a>
+    <nav class="nav" aria-label="Page sections">
+      <a href="#services">Services</a>
+      <a href="#how">How booking works</a>
+      <a href="#centres">Service centres</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Service appointments, by voice</span>
+        <h1>Book your service in one call</h1>
+        <p>Talk to Bruce, our virtual service adviser. He can book a visit, check an existing appointment, reschedule it or cancel it, and answer questions about our services and centres.</p>
+      </div>
+
+      <aside class="call" id="call" aria-label="Call Bruce">
+        <h2>Call Bruce</h2>
+        <p>Press the button and speak. Have your licence plate and postal code ready to confirm who you are.</p>
+        <!-- CLICK-TO-CALL: paste the HTML generated by Cognigy (Endpoint > Click To Call > Generate) inside the div below, replacing the placeholder text. -->
+        <div class="slot" id="click-to-call-slot">Click-to-call widget loads here</div>
+        <small>Calls use your browser's microphone. No app needed.</small>
+      </aside>
+    </div>
+
+    <section id="services">
+      <div class="head">
+        <h2>Service menu</h2>
+        <p>Choose a service when you book, or book a general inspection and describe the symptoms to the technician.</p>
+      </div>
+      <div class="grid3">
+        <article class="svc"><h3>Repair and diagnostics</h3><ul><li>Diagnostic scan</li><li>Dashboard lights</li><li>Engine tune-up</li><li>A/C and heating</li><li>Shocks and struts</li><li>Exhaust system</li></ul></article>
+        <article class="svc"><h3>Oil change</h3><ul><li>Standard oil change</li><li>Synthetic oil change</li><li>High-mileage oil change</li></ul></article>
+        <article class="svc"><h3>Tyre services</h3><ul><li>Tyre rotation</li><li>Tyre balancing</li><li>Flat tyre repair</li><li>Tyre installation</li><li>Wheel alignment</li></ul></article>
+        <article class="svc"><h3>Brake services</h3><ul><li>Brake inspection</li><li>Standard brake service</li><li>Premium brake service</li></ul></article>
+        <article class="svc"><h3>Battery and charging</h3><ul><li>Battery check</li><li>Battery replacement</li><li>Charging system evaluation</li></ul></article>
+        <article class="svc"><h3>Maintenance basics</h3><ul><li>Filter replacement</li><li>Windscreen wipers</li><li>Headlights</li><li>Courtesy vehicle inspection</li></ul></article>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="head">
+        <h2>How booking works</h2>
+        <p>Bruce walks you through the same five steps on the phone.</p>
+      </div>
+      <ol class="steps">
+        <li><strong>Choose a centre</strong><span>Pick the location that suits you.</span></li>
+        <li><strong>Enter vehicle details</strong><span>Confirm your licence plate.</span></li>
+        <li><strong>Select services</strong><span>Name the work you need.</span></li>
+        <li><strong>Pick date and time</strong><span>Bruce reads out open slots.</span></li>
+        <li><strong>Confirm</strong><span>You get a confirmation by text.</span></li>
+      </ol>
+    </section>
+
+    <section id="centres">
+      <div class="head">
+        <h2>Service centres</h2>
+        <p>Ask Bruce for availability at either centre.</p>
+      </div>
+      <div class="centres">
+        <article class="centre">
+          <span class="plate">DE-BER-01</span>
+          <h3>Berlin Auto Center</h3>
+          <dl>
+            <dt>Address</dt><dd>12 Friedrichstrasse, Berlin, 10117, Germany</dd>
+            <dt>Phone</dt><dd>+49 30 1234 5678</dd>
+            <dt>Services</dt><dd>Maintenance, Inspection, Repairs</dd>
+            <dt>Inspections</dt><dd>Certified for government inspection</dd>
+          </dl>
+        </article>
+        <article class="centre">
+          <span class="plate">DE-MUC-01</span>
+          <h3>Munich Service Hub</h3>
+          <dl>
+            <dt>Address</dt><dd>88 Leopoldstrasse, Munich, 80802, Germany</dd>
+            <dt>Phone</dt><dd>+49 89 2345 6789</dd>
+            <dt>Services</dt><dd>Maintenance, Repairs</dd>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="head"><h2>Good questions</h2></div>
+      <details><summary>Can I change my service centre?</summary><p>Yes. You can usually change locations before final confirmation, though you may need to reselect available services or times.</p></details>
+      <details><summary>Will I get a confirmation by email or text?</summary><p>Yes. A confirmation is typically sent by email, and optional text reminders may be available.</p></details>
+      <details><summary>What time should I arrive?</summary><p>Arrive about 10 to 15 minutes early so check-in is quick and easy.</p></details>
+      <details><summary>Are loan vehicles available during service?</summary><p>Availability varies by location and service type. Check with your service centre when booking.</p></details>
+      <details><summary>Can I book if I am not sure what my vehicle needs?</summary><p>Yes. You can choose a general inspection or diagnostic visit and discuss symptoms with the technician.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    <span>National Automotive Service</span>
+    <span>Appointments by voice with Bruce</span>
+  </footer>
+</div>
