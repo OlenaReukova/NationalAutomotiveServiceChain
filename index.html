@@ -105,7 +105,53 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
         <p>Press the button and speak. Have your licence plate and postal code ready to confirm who you are.</p>
         <script src="https://github.com/Cognigy/click-to-call-widget/releases/latest/download/webRTCWidget.js"></script>
 <script>
-	addEventListener("load", (event) => {if (window.initWebRTCWidget) {window.initWebRTCWidget("https://endpoint-trial.cognigy.ai/3377ba3a7f58ebd8c66b2a0b2e68c9bc8a6014a97a9087455307096f2052b975")}});
+addEventListener("load", () => {
+  if (!window.initWebRTCWidget) return;
+  const ENDPOINT = "https://endpoint-trial.cognigy.ai/3377ba3a7f58ebd8c66b2a0b2e68c9bc8a6014a97a9087455307096f2052b975";
+
+  // Panel that shows the Keep / Cancel card on the page
+  const panel = document.createElement("div");
+  panel.style.cssText = "display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:16px";
+  panel.innerHTML =
+    '<div style="position:relative;width:min(480px,100%);height:min(640px,90vh);background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid #ddd;font:14px sans-serif">' +
+    '<a id="xapp-newtab" href="#" target="_blank" rel="noopener">Open in a new tab</a>' +
+    '<button id="xapp-close" style="border:0;background:#eee;border-radius:6px;padding:6px 10px;cursor:pointer">Close</button></div>' +
+    '<iframe id="xapp-frame" title="Your appointment" style="flex:1;width:100%;border:0"></iframe></div>';
+  document.body.appendChild(panel);
+  const frame = panel.querySelector("#xapp-frame");
+  const newTab = panel.querySelector("#xapp-newtab");
+  const show = url => { frame.src = url; newTab.href = url; panel.style.display = "flex"; };
+  const hide = () => { panel.style.display = "none"; frame.src = "about:blank"; };
+  panel.querySelector("#xapp-close").addEventListener("click", hide);
+
+  const readXapp = body => {
+    let b = body;
+    if (typeof b === "string") { try { b = JSON.parse(b); } catch (e) { return undefined; } }
+    if (!b || typeof b !== "object") return undefined;
+    for (const o of [b, b.data, b.data && b.data.data]) {
+      if (o && typeof o === "object" && "xappurl" in o) return o.xappurl;
+    }
+    return undefined;
+  };
+
+  Promise.resolve(window.initWebRTCWidget(ENDPOINT)).then(widget => {
+    if (!widget || !widget.on) return;
+    widget.on("newRTCSession", e => {
+      const session = (e && e.session) || e;
+      session.on("newInfo", ev => {
+        if (ev.originator && ev.originator !== "remote") return;
+        console.log("INFO from flow:", ev);
+        const body = (ev.info && ev.info.body) || (ev.info && ev.info.request && ev.info.request.body) || ev.body;
+        const url = readXapp(body);
+        if (url === undefined) return;
+        if (url) show(url); else hide();
+      });
+      session.on("ended", hide);
+      session.on("terminated", hide);
+    });
+  });
+});
 </script>
         <div class="slot" id="click-to-call-slot"></div>
         <small>Calls use your browser's microphone. No app needed.</small>
