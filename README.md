@@ -24,9 +24,9 @@ A demo website for **Bruce**, a voice assistant that books, checks, moves and ca
 
 | Item | Value |
 |---|---|
-| Mobile number | +49301234567 |
-| Licence plate | BER-1024 |
-| Postal code | 94105 |
+| Mobile number | request details |
+| Licence plate | request details|
+| Postal code | request details |
 
 The backend only knows this one test customer, so any other details are not recognised.
 
